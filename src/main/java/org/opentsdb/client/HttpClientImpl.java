@@ -75,12 +75,12 @@ public class HttpClientImpl implements HttpClient {
 		Response response = new Response(httpResponse.getStatusCode());
 		String content = httpResponse.getContent();
 		if (StringUtils.isNotEmpty(content)) {
-			if (response.isSuccess()) {
+			if (!response.isSuccess()) {
 				ErrorDetail errorDetail = mapper.fromJson(content,
 						ErrorDetail.class);
 				response.setErrorDetail(errorDetail);
 			} else {
-				logger.error("request failed!" + httpResponse);
+				logger.error("request failed!" + content);
 			}
 		}
 		return response;
